@@ -1,0 +1,18 @@
+# Node
+frontend/node_modules
+frontend/dist
+
+# Build
+backend/build
+
+# Mac
+.DS_Store
+
+# Visual Studio Code
+.vscode
+
+*.exe
+*.dll
+backend/build/
+frontend/node_modules/
+.env

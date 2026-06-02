@@ -1,0 +1,355 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+  }
+  
+  html,
+  body,
+  #root{
+    width:100%;
+    height:100%;
+  }
+  
+  body{
+    overflow:hidden;
+  }
+  
+  /* =========================
+     MAIN CONTAINER
+  ========================= */
+  
+  .register-container{
+
+    width:100%;
+    height:100vh;
+  
+    background:
+      linear-gradient(
+        rgba(5,10,30,0.72),
+        rgba(5,10,30,0.72)
+      ),
+  
+      url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1974&auto=format&fit=crop");
+  
+    background-size:cover;
+    background-position:center;
+  
+    display:flex;
+  
+    justify-content:center;
+    align-items:center;
+  
+    padding:40px;
+  }
+  
+  /* =========================
+     REGISTER CARD
+  ========================= */
+  
+  .register-right{
+
+    width:100%;
+    height:100%;
+  
+    display:flex;
+  
+    justify-content:center;
+    align-items:center;
+    padding-right:300px;
+  }
+  .register-form{
+
+    width:100%;
+    max-width:1050px;
+  
+    background:rgba(255,255,255,0.97);
+  
+    backdrop-filter:blur(12px);
+  
+    border-radius:32px;
+  
+    padding:55px 60px;
+  
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.4);
+  
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  
+    margin:auto;
+  }
+  
+  
+  /* =========================
+     HEADER
+  ========================= */
+  
+  .form-header{
+    text-align:center;
+    margin-bottom:35px;
+  }
+  
+  .icon-circle{
+    width:80px;
+    height:80px;
+  
+    margin:auto;
+    margin-bottom:18px;
+  
+    border-radius:50%;
+  
+    background:#eef2ff;
+  
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  
+    color:#4f46e5;
+  
+    font-size:32px;
+  }
+  
+  .form-header h1{
+    font-size:42px;
+    color:#0f172a;
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  
+  .form-header p{
+    color:#64748b;
+    font-size:16px;
+  }
+  
+  /* =========================
+     GRID
+  ========================= */
+  
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    margin-top:30px;
+  }
+  
+  /* =========================
+     INPUT GROUP
+  ========================= */
+  
+  .input-group{
+    display:flex;
+    flex-direction:column;
+  }
+  
+  .input-group label{
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:600;
+    color:#1e293b;
+  }
+  
+  .input-wrapper{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+  }
+  
+  .input-wrapper input,
+.input-wrapper select{
+
+  width:100%;
+
+  height:64px;
+
+  border:1px solid #dbe2ea;
+
+  border-radius:16px;
+
+  padding-left:70px;
+  padding-right:55px;
+
+  font-size:15px;
+
+  background:white;
+
+  outline:none;
+
+  transition:0.3s;
+
+  color:#0f172a;
+
+  display:flex;
+  align-items:center;
+}
+
+.input-wrapper input::placeholder{
+    color:#94a3b8;
+    font-size:14px;
+  }
+  .input-wrapper input,
+.input-wrapper select{
+  appearance:none;
+}
+
+  .input-wrapper input:focus,
+  .input-wrapper select:focus{
+  
+    border-color:#4f46e5;
+  
+    box-shadow:
+      0 0 0 4px rgba(79,70,229,0.1);
+  }
+  
+  .input-icon{
+
+    position:absolute;
+  
+    left:24px;
+  
+    top:22px;
+  
+    font-size:18px;
+  
+    color:#94a3b8;
+  
+    z-index:2;
+  
+    pointer-events:none;
+  }
+  .eye-icon{
+  
+    position:absolute;
+  
+    right:18px;
+    top:50%;
+  
+    transform:translateY(-50%);
+  
+    cursor:pointer;
+  
+    color:#64748b;
+  
+    font-size:18px;
+  }
+  
+  /* =========================
+     TERMS
+  ========================= */
+  
+  .terms{
+    margin-top:25px;
+  
+    display:flex;
+    align-items:center;
+  
+    gap:10px;
+  }
+  
+  .terms p{
+    font-size:14px;
+    color:#475569;
+  }
+  
+  /* =========================
+     BUTTON
+  ========================= */
+  
+  .register-btn{
+  
+    width:100%;
+    height:60px;
+  
+    margin-top:30px;
+  
+    border:none;
+  
+    border-radius:16px;
+  
+    background:
+      linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+      );
+  
+    color:white;
+  
+    font-size:18px;
+    font-weight:600;
+  
+    cursor:pointer;
+  
+    transition:0.3s;
+  }
+  
+  .register-btn:hover{
+  
+    transform:translateY(-2px);
+  
+    box-shadow:
+      0 12px 30px rgba(79,70,229,0.25);
+  }
+  
+  /* =========================
+     LOGIN LINK
+  ========================= */
+  
+  .login-link{
+    text-align:center;
+    margin-top:25px;
+    color:#64748b;
+  }
+  
+  .login-link a{
+    margin-left:8px;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+  }
+  
+  /* =========================
+     RESPONSIVE
+  ========================= */
+  
+  @media(max-width:1100px){
+
+    .register-form{
+      max-width:900px;
+    }
+  }
+  
+  @media(max-width:900px){
+  
+    .register-container{
+      padding:20px;
+    }
+  
+    .register-form{
+      padding:35px;
+      max-width:700px;
+    }
+  
+    .form-grid{
+      grid-template-columns:1fr;
+    }
+  
+    .form-header h1{
+      font-size:36px;
+    }
+  }
+  
+  @media(max-width:600px){
+  
+    .register-form{
+      padding:25px 18px;
+      border-radius:24px;
+    }
+  
+    .register-btn{
+      height:56px;
+    }
+  }

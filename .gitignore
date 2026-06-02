@@ -1,0 +1,21 @@
+# Frontend
+node_modules/
+dist/
+build/
+
+# Backend
+backend/build/
+backend/Release/
+backend/Debug/
+backend/x64/
+backend/.env
+
+# VS Code
+.vscode/
+
+# Environment Files
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

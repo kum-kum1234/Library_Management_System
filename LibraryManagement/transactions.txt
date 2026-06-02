@@ -1,0 +1,4 @@
+Book 301 Issued on day 90
+Book 301 Returned | Fine: ₹60
+Book 101 Issued to admin on day 90
+Book 101 Returned | Fine: ₹15

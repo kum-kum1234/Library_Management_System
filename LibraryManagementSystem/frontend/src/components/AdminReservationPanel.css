@@ -1,0 +1,92 @@
+.reservation-panel{
+
+    background:#111827;
+  
+    padding:20px;
+  
+    border-radius:14px;
+  
+    margin-top:20px;
+  }
+  
+  .reservation-panel h2{
+  
+    color:white;
+  
+    margin-bottom:20px;
+  }
+  
+  .reservation-card{
+  
+    display:flex;
+  
+    justify-content:space-between;
+  
+    align-items:center;
+  
+    background:#1f2937;
+  
+    padding:16px;
+  
+    border-radius:12px;
+  
+    margin-bottom:14px;
+  }
+  
+  .reservation-card h4{
+  
+    color:white;
+  
+    margin-bottom:6px;
+  }
+  
+  .reservation-card p{
+  
+    color:#cbd5e1;
+  
+    font-size:14px;
+  }
+  
+  .reservation-card span{
+  
+    color:#fbbf24;
+  
+    font-size:13px;
+  }
+  
+  .reservation-actions{
+  
+    display:flex;
+  
+    gap:10px;
+  }
+  
+  .approve-btn{
+  
+    background:#22c55e;
+  
+    color:white;
+  
+    border:none;
+  
+    padding:10px 14px;
+  
+    border-radius:8px;
+  
+    cursor:pointer;
+  }
+  
+  .reject-btn{
+  
+    background:#ef4444;
+  
+    color:white;
+  
+    border:none;
+  
+    padding:10px 14px;
+  
+    border-radius:8px;
+  
+    cursor:pointer;
+  }

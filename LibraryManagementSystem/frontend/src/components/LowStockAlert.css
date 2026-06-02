@@ -1,0 +1,119 @@
+.low-stock-card{
+
+    background:
+      linear-gradient(
+        135deg,
+        #3b0a0a,
+        #7f1d1d
+      );
+  
+    border:1px solid #ef4444;
+  
+    border-radius:16px;
+  
+    padding:20px;
+  
+    margin-bottom:22px;
+  
+    color:#fff;
+  
+    box-shadow:
+      0 4px 18px rgba(0,0,0,0.25);
+  }
+  
+  .low-stock-header{
+  
+    font-size:20px;
+  
+    font-weight:700;
+  
+    margin-bottom:18px;
+  }
+  
+  .low-stock-list{
+  
+    display:flex;
+  
+    flex-direction:column;
+  
+    gap:14px;
+  }
+  
+  .low-stock-item{
+  
+    display:flex;
+  
+    justify-content:space-between;
+  
+    align-items:center;
+  
+    background:
+      rgba(255,255,255,0.08);
+  
+    padding:14px;
+  
+    border-radius:12px;
+  }
+  
+  .low-stock-item h4{
+  
+    margin:0;
+  
+    font-size:16px;
+  }
+  
+  .low-stock-item p{
+  
+    margin-top:4px;
+  
+    font-size:13px;
+  
+    opacity:0.9;
+  }
+  
+  .warning{
+  
+    background:#f59e0b;
+  
+    color:#fff;
+  
+    padding:6px 12px;
+  
+    border-radius:30px;
+  
+    font-size:12px;
+  
+    font-weight:600;
+  }
+  
+  .danger{
+  
+    background:#dc2626;
+  
+    color:#fff;
+  
+    padding:6px 12px;
+  
+    border-radius:30px;
+  
+    font-size:12px;
+  
+    font-weight:700;
+  }
+  
+  .inventory-ok{
+  
+    background:#052e16;
+  
+    border:1px solid #22c55e;
+  
+    color:#bbf7d0;
+  
+    padding:16px;
+  
+    border-radius:14px;
+  
+    margin-bottom:20px;
+  
+    font-weight:600;
+  }
