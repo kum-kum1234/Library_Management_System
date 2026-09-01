@@ -11,6 +11,7 @@ import Modal from '../../components/Modal';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import EmptyState from '../../components/EmptyState';
 import StatusBadge from '../../components/StatusBadge';
+import ReserveButton from '../../components/ReserveButton';
 import { bookStatus } from '../../utils/libraryData';
 import { submitBookRequest } from '../../utils/bookRequests';
 import { checkUnpaidFines } from '../../utils/studentData';
@@ -185,6 +186,7 @@ const waitingCount =
         <button type="button" className="btn-primary" onClick={() => issueRequest(book)}>
           Issue Request
         </button>
+        <ReserveButton bookId={book.id} />
       </>
     );
   };

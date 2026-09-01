@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
     );
 
     const {
+      id,
       token,
       username,
       role
@@ -45,15 +46,7 @@ export function AuthProvider({ children }) {
       token
     );
 
-    let id = null;
-    try {
-      const me = await api.get('/me');
-      id = me.data.id;
-    } catch {
-      /* profile id optional until /me succeeds */
-    }
-
-    const userData = { username, role, id };
+    const userData = { id, username, role };
     localStorage.setItem('library_user', JSON.stringify(userData));
     setUser(userData);
     return userData;

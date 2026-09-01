@@ -53,6 +53,7 @@ export default function LoginPage() {
       localStorage.setItem(
         'library_user',
         JSON.stringify({
+          id: res.data.id,
           username: res.data.username,
           role: res.data.role
         })
