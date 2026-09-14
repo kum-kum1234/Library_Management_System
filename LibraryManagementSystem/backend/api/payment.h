@@ -206,7 +206,7 @@ std::string stripeRequest(
     const std::string& method,
     const std::string& url,
     const std::string& secretKey,
-    const std::map<std::string, std::string>& formFields
+    const std::map<std::string, std::string>& formFields = {}
 ) {
     CURL* curl = curl_easy_init();
     if (!curl) throw std::runtime_error("Failed to initialize cURL");
@@ -551,12 +551,10 @@ void registerPaymentRoutes(App& app) {
             transactionId = body["transactionId"].i();
         }
 
-        std::string stripeText = stripeRequest(
-    "GET",
-    "https://api.stripe.com/v1/checkout/sessions/" + stripePaymentId,
-    stripeKey,
-    {}
-);
+        std::string paymentMethod = "STRIPE";
+        if (body.has("payment_method")) paymentMethod = body["payment_method"].s();
+        else if (body.has("paymentMethod")) paymentMethod = body["paymentMethod"].s();
+
         std::string sessionId;
         if (body.has("stripe_session_id")) sessionId = body["stripe_session_id"].s();
         else if (body.has("sessionId")) sessionId = body["sessionId"].s();
