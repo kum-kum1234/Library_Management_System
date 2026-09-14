@@ -25,7 +25,9 @@ RUN wget -O /tmp/asio.tar.gz https://github.com/chriskohlhoff/asio/archive/refs/
 # Create symbolic link so #include <mysql.h> resolves correctly
 RUN ln -s /usr/include/mysql /usr/local/include/mysql
 
-RUN mkdir -p build && cd build && cmake .. && make
+# Run CMake and display error logs if configuration fails
+RUN mkdir -p build && cd build && cmake .. || (echo "=== CMAKE ERROR LOG ===" && cat CMakeFiles/CMakeError.log && echo "=== CMAKE OUTPUT LOG ===" && cat CMakeFiles/CMakeOutput.log && exit 1)
+RUN cd build && make
 
 EXPOSE 18080
 CMD ["./build/library-api"]
