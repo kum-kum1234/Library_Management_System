@@ -195,13 +195,14 @@ std::string stripeRequest(
 
 #else
 
+// Linux Stub for Stripe requests (mocked or returning error if called in production without libcurl)
 std::string stripeRequest(
     const std::string&,
     const std::string&,
     const std::string&,
-    const std::map<std::string, std::string>&
+    const std::map<std::string, std::string>& = {}
 ) {
-    throw std::runtime_error("Stripe HTTP client is only implemented for Windows builds");
+    throw std::runtime_error("Stripe HTTP client is only fully implemented for Windows WinHTTP or requires libcurl on Linux.");
 }
 
 #endif
