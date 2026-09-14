@@ -27,8 +27,8 @@ RUN wget -O /tmp/asio.tar.gz https://github.com/chriskohlhoff/asio/archive/refs/
 # Create symbolic link for MySQL headers
 RUN ln -s /usr/include/mysql /usr/local/include/mysql
 
-# Build the application
-RUN mkdir -p build && cd build && cmake .. && make
+# Build the application with verbose make output to catch the exact error
+RUN mkdir -p build && cd build && cmake .. && make VERBOSE=1
 
 EXPOSE 18080
 CMD ["./build/library-api"]
