@@ -13,6 +13,8 @@
 #include <windows.h>
 #include <winhttp.h>
 #pragma comment(lib, "winhttp.lib")
+#else
+#include <curl/curl.h>
 #endif
 
 #include <cctype>
@@ -195,14 +197,62 @@ std::string stripeRequest(
 
 #else
 
-// Linux Stub for Stripe requests (mocked or returning error if called in production without libcurl)
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
 std::string stripeRequest(
-    const std::string&,
-    const std::string&,
-    const std::string&,
-    const std::map<std::string, std::string>& = {}
+    const std::string& method,
+    const std::string& url,
+    const std::string& secretKey,
+    const std::map<std::string, std::string>& formFields
 ) {
-    throw std::runtime_error("Stripe HTTP client is only fully implemented for Windows WinHTTP or requires libcurl on Linux.");
+    CURL* curl = curl_easy_init();
+    if (!curl) throw std::runtime_error("Failed to initialize cURL");
+
+    std::string readBuffer;
+    std::string body;
+    if (!formFields.empty()) {
+        body = buildFormBody(formFields);
+    }
+
+    struct curl_slist* headers = nullptr;
+    std::string authHeader = "Authorization: Bearer " + secretKey;
+    headers = curl_slist_append(headers, authHeader.c_str());
+
+    if (method == "POST") {
+        headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+        curl_easy_setopt(curl, CURLOPT_POST, 1L);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
+    } else if (method == "GET") {
+        curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
+    }
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
+
+    CURLcode res = curl_easy_perform(curl);
+    
+    long http_code = 0;
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+
+    if (res != CURLE_OK) {
+        throw std::runtime_error(std::string("cURL error: ") + curl_easy_strerror(res));
+    }
+
+    if (http_code < 200 || http_code >= 300) {
+        throw std::runtime_error("Stripe HTTP error: " + std::to_string(http_code) + " " + readBuffer);
+    }
+
+    return readBuffer;
 }
 
 #endif
@@ -552,7 +602,8 @@ void registerPaymentRoutes(App& app) {
                 std::string stripeText = stripeRequest(
                     "GET",
                     "https://api.stripe.com/v1/checkout/sessions/" + stripePaymentId,
-                    stripeKey
+                    stripeKey,
+                    {}
                 );
 
                 auto session = crow::json::load(stripeText);
