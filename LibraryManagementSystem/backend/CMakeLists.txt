@@ -18,7 +18,7 @@ include_directories(api)
 include_directories(models)
 include_directories(utils)
 include_directories(${MYSQL_INCLUDE_DIR})
-
+include_directories(include)
 link_directories(${MYSQL_LIB_DIR})
 link_directories(C:/vcpkg/installed/x64-windows/lib)
 

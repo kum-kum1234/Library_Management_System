@@ -7,8 +7,14 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     git \
     ca-certificates
+
 WORKDIR /app
 COPY . .
+
+# Download Crow header library if it doesn't exist locally
+RUN git clone https://github.com/CrowCpp/Crow.git /tmp/crow && \
+    mkdir -p include && cp -r /tmp/crow/include/crow /app/include/
+
 RUN mkdir -p build && cd build && cmake .. && make
 EXPOSE 18080
 CMD ["./build/library-api"]
