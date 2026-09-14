@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY . .
 
-# FIX: Copy all Crow headers directly to the global system include path
+# Download and install Crow headers globally
 RUN git clone https://github.com/CrowCpp/Crow.git /tmp/crow && \
     cp -r /tmp/crow/include/* /usr/local/include/
 
