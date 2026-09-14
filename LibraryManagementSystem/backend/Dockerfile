@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     libmysqlclient-dev \
     libssl-dev \
+    libcurl4-openssl-dev \
     git \
     wget \
     ca-certificates

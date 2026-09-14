@@ -39,5 +39,6 @@ target_link_libraries(library-api PRIVATE
     mysqlclient
     ssl
     crypto
+    curl
     dl
 )
