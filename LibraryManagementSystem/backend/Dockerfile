@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY . .
 
-# Download Crow header library
+# FIX: Copy all Crow headers directly to the global system include path
 RUN git clone https://github.com/CrowCpp/Crow.git /tmp/crow && \
-    mkdir -p include && cp -r /tmp/crow/include/crow /app/include/
+    cp -r /tmp/crow/include/* /usr/local/include/
 
 RUN mkdir -p build && cd build && cmake .. && make
 
