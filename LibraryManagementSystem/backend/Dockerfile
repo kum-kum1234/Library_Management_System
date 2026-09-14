@@ -22,6 +22,9 @@ RUN wget -O /tmp/asio.tar.gz https://github.com/chriskohlhoff/asio/archive/refs/
     mkdir -p /tmp/asio && tar -xzf /tmp/asio.tar.gz -C /tmp/asio --strip-components=1 && \
     cp -r /tmp/asio/asio/include/* /usr/local/include/
 
+# Create symbolic link so #include <mysql.h> resolves correctly
+RUN ln -s /usr/include/mysql /usr/local/include/mysql
+
 RUN mkdir -p build && cd build && cmake .. && make
 
 EXPOSE 18080
