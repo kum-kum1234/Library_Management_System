@@ -5,10 +5,8 @@ project(LibraryManagementBackend)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find required standard packages
 find_package(Threads REQUIRED)
 
-# Direct include paths for Linux Docker container
 include_directories(
     include
     /usr/local/include
@@ -36,7 +34,6 @@ add_executable(library-api
     existing_cpp_code/Utils.cpp
 )
 
-# Link required Linux libraries including Threads and MySQL
 target_link_libraries(library-api PRIVATE
     Threads::Threads
     mysqlclient
