@@ -4,23 +4,44 @@ project(LibraryManagementBackend)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# MySQL paths (Windows default installation)
-set(MYSQL_INCLUDE_DIR "C:/Program Files/MySQL/MySQL Server 8.0/include")
-set(MYSQL_LIB_DIR "C:/Program Files/MySQL/MySQL Server 8.0/lib")
+# Detect Platform and Configure MySQL / Include Paths
+if(UNIX AND NOT APPLE)
+    # Linux / Docker Environment (Render)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(MYSQL REQUIRED mysqlclient)
 
-# Include directories for Crow (header-only)
-include_directories(/usr/include)
-include_directories(C:/vcpkg/installed/x64-windows/include)
+    include_directories(
+        include
+        /usr/local/include
+        /usr/include
+        /usr/include/mysql
+        ${MYSQL_INCLUDE_DIRS}
+    )
+    link_directories(${MYSQL_LIBRARY_DIRS})
+else()
+    # Windows Local Development Environment
+    set(MYSQL_INCLUDE_DIR "C:/Program Files/MySQL/MySQL Server 8.0/include")
+    set(MYSQL_LIB_DIR "C:/Program Files/MySQL/MySQL Server 8.0/lib")
 
-include_directories(existing_cpp_code)
-include_directories(database)
-include_directories(api)
-include_directories(models)
-include_directories(utils)
-include_directories(${MYSQL_INCLUDE_DIR})
-include_directories(include)
-link_directories(${MYSQL_LIB_DIR})
-link_directories(C:/vcpkg/installed/x64-windows/lib)
+    include_directories(
+        include
+        C:/vcpkg/installed/x64-windows/include
+        ${MYSQL_INCLUDE_DIR}
+    )
+    link_directories(
+        ${MYSQL_LIB_DIR}
+        C:/vcpkg/installed/x64-windows/lib
+    )
+endif()
+
+# Project directories
+include_directories(
+    existing_cpp_code
+    database
+    api
+    models
+    utils
+)
 
 add_executable(library-api
     server.cpp
@@ -33,7 +54,17 @@ add_executable(library-api
     existing_cpp_code/Utils.cpp
 )
 
-target_link_libraries(library-api PRIVATE
-    libmysql
-    winhttp
-)
+if(UNIX AND NOT APPLE)
+    target_link_libraries(library-api PRIVATE
+        mysqlclient
+        ssl
+        crypto
+        pthread
+        dl
+    )
+else()
+    target_link_libraries(library-api PRIVATE
+        libmysql
+        winhttp
+    )
+endif()
