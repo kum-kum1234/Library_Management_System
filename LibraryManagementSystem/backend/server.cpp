@@ -11,22 +11,16 @@ struct CORSMiddleware {
 
     struct context {};
 
-    void before_handle(
-
-        crow::request& req,
-        crow::response& res,
-        context& ctx
-
-    ) {
-
-        // ========================================
-        // CORS HEADERS
-        // ========================================
-
-        res.set_header(
-            "Access-Control-Allow-Origin",
-            "http://localhost:3000"
-        );
+    void set_cors_headers(crow::request& req, crow::response& res) {
+        std::string origin = req.get_header_value("Origin");
+        
+        // Dynamically allow local development or your live Vercel frontend
+        if (origin == "http://localhost:3000" || origin == "https://library-management-system-g5f6.vercel.app") {
+            res.set_header("Access-Control-Allow-Origin", origin);
+        } else {
+            // Default fallback for safety
+            res.set_header("Access-Control-Allow-Origin", "https://library-management-system-g5f6.vercel.app");
+        }
 
         res.set_header(
             "Access-Control-Allow-Methods",
@@ -37,18 +31,22 @@ struct CORSMiddleware {
             "Access-Control-Allow-Headers",
             "Content-Type, Authorization"
         );
+    }
 
-        // ========================================
-        // HANDLE PREFLIGHT REQUEST
-        // ========================================
+    void before_handle(
+
+        crow::request& req,
+        crow::response& res,
+        context& ctx
+
+    ) {
+        set_cors_headers(req, res);
 
         if (
             req.method ==
             crow::HTTPMethod::Options
         ) {
-
             res.code = 204;
-
             res.end();
         }
     }
@@ -60,25 +58,7 @@ struct CORSMiddleware {
         context& ctx
 
     ) {
-
-        // ========================================
-        // ADD CORS HEADERS TO ALL RESPONSES
-        // ========================================
-
-        res.set_header(
-            "Access-Control-Allow-Origin",
-            "http://localhost:3000"
-        );
-
-        res.set_header(
-            "Access-Control-Allow-Methods",
-            "GET, POST, PUT, DELETE, OPTIONS"
-        );
-
-        res.set_header(
-            "Access-Control-Allow-Headers",
-            "Content-Type, Authorization"
-        );
+        set_cors_headers(req, res);
     }
 };
 
