@@ -60,19 +60,12 @@ export default function RegisterPage() {
     try {
 
       await api.post(
-
-  '/register',
-
+  '/api/register',
   {
-
     username: form.username,
-
     password: form.password,
-
     role: form.role
-
   }
-
 );
 
       alert('Registration successful');
