@@ -14,8 +14,8 @@ struct CORSMiddleware {
     void set_cors_headers(crow::request& req, crow::response& res) {
         std::string origin = req.get_header_value("Origin");
         
-        // Dynamically allow local development or your live Vercel frontend
-        if (origin == "http://localhost:3000" || origin == "https://library-management-system-g5f6.vercel.app") {
+        // Dynamically allow localhost or any Vercel deployment domain ending with .vercel.app
+        if (origin == "http://localhost:3000" || (origin.length() >= 11 && origin.compare(origin.length() - 11, 11, ".vercel.app") == 0)) {
             res.set_header("Access-Control-Allow-Origin", origin);
         } else {
             // Default fallback for safety
@@ -34,11 +34,9 @@ struct CORSMiddleware {
     }
 
     void before_handle(
-
         crow::request& req,
         crow::response& res,
         context& ctx
-
     ) {
         set_cors_headers(req, res);
 
@@ -52,16 +50,13 @@ struct CORSMiddleware {
     }
 
     void after_handle(
-
         crow::request& req,
         crow::response& res,
         context& ctx
-
     ) {
         set_cors_headers(req, res);
     }
 };
-
 // ========================================
 // MAIN FUNCTION
 // ========================================
