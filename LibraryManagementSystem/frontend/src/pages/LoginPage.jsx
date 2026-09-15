@@ -38,10 +38,7 @@ export default function LoginPage() {
 
     try {
 
-      const res = await api.post(
-        '/login',
-        form
-      );
+      const res = await api.post('/api/login', form);
       
       console.log(res.data);
 
