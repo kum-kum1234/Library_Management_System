@@ -46,7 +46,7 @@ struct CORSMiddleware {
             req.method ==
             crow::HTTPMethod::Options
         ) {
-            res.code = 204;
+            res.code = 200;
             res.end();
         }
     }
