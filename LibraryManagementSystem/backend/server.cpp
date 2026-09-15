@@ -7,19 +7,35 @@
 // CUSTOM CORS MIDDLEWARE
 // ========================================
 
+// ========================================
+// CUSTOM CORS MIDDLEWARE
+// ========================================
+
 struct CORSMiddleware {
 
     struct context {};
 
-    void set_cors_headers(crow::request& req, crow::response& res) {
+    void set_cors_headers(
+        crow::request& req,
+        crow::response& res
+    ) {
+
         std::string origin = req.get_header_value("Origin");
-        
-        // Dynamically allow localhost or any Vercel deployment domain ending with .vercel.app
-        if (origin == "http://localhost:3000" || (origin.length() >= 11 && origin.compare(origin.length() - 11, 11, ".vercel.app") == 0)) {
-            res.set_header("Access-Control-Allow-Origin", origin);
-        } else {
-            // Default fallback for safety
-            res.set_header("Access-Control-Allow-Origin", "https://library-management-system-g5f6.vercel.app");
+
+        // Your current production frontend
+        const std::string productionOrigin =
+            "https://library-management-system-gules-eta.vercel.app";
+
+        // Allow local development + production Vercel frontend
+        if (
+            origin == "http://localhost:3000" ||
+            origin == "http://localhost:5173" ||
+            origin == productionOrigin
+        ) {
+            res.set_header(
+                "Access-Control-Allow-Origin",
+                origin
+            );
         }
 
         res.set_header(
@@ -31,6 +47,11 @@ struct CORSMiddleware {
             "Access-Control-Allow-Headers",
             "Content-Type, Authorization"
         );
+
+        res.set_header(
+            "Access-Control-Allow-Credentials",
+            "true"
+        );
     }
 
     void before_handle(
@@ -38,14 +59,16 @@ struct CORSMiddleware {
         crow::response& res,
         context& ctx
     ) {
+
         set_cors_headers(req, res);
 
-        if (
-            req.method ==
-            crow::HTTPMethod::Options
-        ) {
-            res.code = 200;
+        // Handle browser CORS preflight request
+        if (req.method == crow::HTTPMethod::Options) {
+
+            res.code = 204;
             res.end();
+
+            return;
         }
     }
 
@@ -54,6 +77,7 @@ struct CORSMiddleware {
         crow::response& res,
         context& ctx
     ) {
+
         set_cors_headers(req, res);
     }
 };
