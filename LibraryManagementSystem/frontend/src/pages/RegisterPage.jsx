@@ -59,14 +59,11 @@ export default function RegisterPage() {
 
     try {
 
-      await api.post(
-  '/api/register',
-  {
-    username: form.username,
-    password: form.password,
-    role: form.role
-  }
-);
+      await api.post('/register', {
+  username: form.username,
+  password: form.password,
+  role: form.role
+});
 
       alert('Registration successful');
 

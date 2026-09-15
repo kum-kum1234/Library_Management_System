@@ -38,8 +38,7 @@ export default function LoginPage() {
 
     try {
 
-      const res = await api.post('/api/login', form);
-      
+      const res = await api.post('/login', form);      
       console.log(res.data);
 
       localStorage.setItem(
